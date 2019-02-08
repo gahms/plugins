@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import io.flutter.view.FlutterMain;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -165,6 +166,10 @@ class Convert {
     return (String) o;
   }
 
+  private static MapStyleOptions toMapStyle(Object o) {
+    return new MapStyleOptions((String)o);
+  }
+
   static void interpretGoogleMapOptions(Object o, GoogleMapOptionsSink sink) {
     final Map<?, ?> data = toMap(o);
     final Object cameraTargetBounds = data.get("cameraTargetBounds");
@@ -210,6 +215,10 @@ class Convert {
     final Object myLocationEnabled = data.get("myLocationEnabled");
     if (myLocationEnabled != null) {
       sink.setMyLocationEnabled(toBoolean(myLocationEnabled));
+    }
+    final Object mapStyle = data.get("mapStyle");
+    if (mapStyle != null) {
+      sink.setMapStyle(toMapStyle(mapStyle));
     }
   }
 
